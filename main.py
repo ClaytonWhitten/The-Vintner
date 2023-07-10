@@ -2,9 +2,12 @@
 # @author Clayton Whitten
 
 from tkinter import *
-from tkinter.font import *
 import customtkinter
+from PIL import Image
 import sys
+import os
+
+customtkinter.set_default_color_theme("dark-blue")
 
 def grav_to_brix(SG):
     brix = (((182.4601 * SG - 775.6821) * SG + 1262.7794) * SG - 669.5622)
@@ -14,55 +17,45 @@ def grav_to_brix(SG):
 def tosna_calculation():
     pass
 
-window = Tk()
+app = customtkinter.CTk()
 
 
-window.configure(bg='black')
-w_icon = PhotoImage(file='bottle.png')
-window.iconphoto(False, w_icon)
-window.geometry('800x600')
-window.title('The Vintner')
+app.geometry('800x600')
+app.iconbitmap(default='custom_assets/bottle.ico')
+app.title('The Vintner')
 
-
-intro = Label(
-    window,
-    text='The Vintner: Organize Your Wines',
-    foreground='blue',
-    background='black',
-    font=('Bahnschrift SemiBold', 26),
-    anchor='center',
+top_frame = customtkinter.CTkFrame(
+    app,
+    fg_color='white',
+    width=800,
+    height=100,
+    corner_radius=0
 )
-intro.pack(pady=40)
+top_frame.pack(pady=20)
 
-nutrients = ['Fermaid O', 'Fermaid K']
-
-nutrient_preference = OptionMenu(
-    window,
-
+logo = customtkinter.CTkImage(
+    light_image=Image.open("custom_assets/logo.png"),
+    dark_image=Image.open("custom_assets/darkmode_logo.png"),
+    size=(315, 61.6)
 )
 
-batch_size_label = Label(
-    window,
-    text='Batch Size (In Gallons)',
-    background='black',
-    foreground='white'
+logo_label = customtkinter.CTkLabel(
+    top_frame,
+    image=logo,
+    text=None,
+    anchor='w'
 )
-batch_size_label.pack(pady=5)
-batch_size_entry = Entry(window)
-batch_size_entry.pack()
+logo_label.pack()
 
-tosna_button = Button(
-    window,
-    text='TOSNA 3.0 Calculator',
-    fg='white',
-    bg='#FF0000',
-    width=20,
-    command=lambda: print('new window')
+tosna_button = customtkinter.CTkButton(
+    app,
+    text='Tailored Organic Staggered Nutrient Addition Calculator', # Tailored Organic Staggered Nutrient Addition
+    font=customtkinter.CTkFont(family='Aldrich', size=14),
+    fg_color='#0050FF',
+    corner_radius=10
 )
-button_font = Font(family='Yu Gothic', weight='bold')
-tosna_button['font'] = button_font
-tosna_button.pack(pady=20)
+tosna_button.pack()
 
 
-window.mainloop()
+app.mainloop()
 
